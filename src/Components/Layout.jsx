@@ -1,84 +1,53 @@
+
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, NavLink, useNavigate } from "react-router-dom";
 
 const Layout = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("isLoggedIn");
+
+    navigate("/", { replace: true });
+  };
+
   return (
     <div className="layout">
-
       {/* Sidebar */}
       <aside className="sidebar">
-
         <h2>CSES</h2>
 
-        <p className="portal">
-          Support Portal
-        </p>
+        <p className="portal">Support Portal</p>
 
         <nav>
-
-          <Link to="/dashboard">
-            Dashboard
-          </Link>
-
-          <Link to="/cases">
-            Cases
-          </Link>
-
-          <Link to="/parents">
-            Parents
-          </Link>
-
-          <Link to="/children">
-            Children
-          </Link>
-
-          <Link to="/payments">
-            Payments
-          </Link>
-
-          <Link to="/court-orders">
-            Court Orders
-          </Link>
-
-          <Link to="/reports">
-            Reports
-          </Link>
-
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/cases">Cases</NavLink>
+          <NavLink to="/parents">Parents</NavLink>
+          <NavLink to="/children">Children</NavLink>
+          <NavLink to="/payments">Payments</NavLink>
+          <NavLink to="/court-orders">Court Orders</NavLink>
+          <NavLink to="/reports">Reports</NavLink>
         </nav>
 
-        <Link className="logout" to="/">
+        <button className="logout" onClick={handleLogout}>
           Logout
-        </Link>
-
+        </button>
       </aside>
-
 
       {/* Main Content */}
       <main className="main-content">
-
         {/* Navbar */}
         <header className="navbar">
+          <h2>Child Support Enforcement System</h2>
 
-          <h2>
-            Child Support Enforcement System
-          </h2>
-
-          <div className="user">
-            Case Worker
-          </div>
-
+          <div className="user">Case Worker</div>
         </header>
-
 
         {/* Page Content */}
         <section className="content">
-
           <Outlet />
-
         </section>
-
       </main>
-
     </div>
   );
 };
